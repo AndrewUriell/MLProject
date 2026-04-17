@@ -10,3 +10,6 @@ training:
   batch_size: 32
   epochs: 3
   monitor: roc_auc
+
+readmission:
+  window_days: 30
