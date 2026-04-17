@@ -1,0 +1,118 @@
+2026-04-17 17:10:47 Transformer(
+  (embedding_model): EmbeddingModel(embedding_layers=ModuleDict(
+    (conditions): Embedding(4493, 128)
+    (procedures): Embedding(1414, 128)
+    (drugs_hist): Embedding(1164, 128)
+  ))
+  (transformer): ModuleDict(
+    (conditions): TransformerLayer(
+      (transformer): ModuleList(
+        (0): TransformerBlock(
+          (attention): MultiHeadedAttention(heads=1, d_model=128, dropout=0.1)
+          (feed_forward): PositionwiseFeedForward(
+            (w_1): Linear(in_features=128, out_features=512, bias=True)
+            (w_2): Linear(in_features=512, out_features=128, bias=True)
+            (dropout): Dropout(p=0.5, inplace=False)
+            (activation): GELU(approximate='none')
+          )
+          (input_sublayer): SublayerConnection(
+            (norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+            (dropout): Dropout(p=0.5, inplace=False)
+          )
+          (output_sublayer): SublayerConnection(
+            (norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+            (dropout): Dropout(p=0.5, inplace=False)
+          )
+          (dropout): Dropout(p=0.5, inplace=False)
+        )
+      )
+    )
+    (procedures): TransformerLayer(
+      (transformer): ModuleList(
+        (0): TransformerBlock(
+          (attention): MultiHeadedAttention(heads=1, d_model=128, dropout=0.1)
+          (feed_forward): PositionwiseFeedForward(
+            (w_1): Linear(in_features=128, out_features=512, bias=True)
+            (w_2): Linear(in_features=512, out_features=128, bias=True)
+            (dropout): Dropout(p=0.5, inplace=False)
+            (activation): GELU(approximate='none')
+          )
+          (input_sublayer): SublayerConnection(
+            (norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+            (dropout): Dropout(p=0.5, inplace=False)
+          )
+          (output_sublayer): SublayerConnection(
+            (norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+            (dropout): Dropout(p=0.5, inplace=False)
+          )
+          (dropout): Dropout(p=0.5, inplace=False)
+        )
+      )
+    )
+    (drugs_hist): TransformerLayer(
+      (transformer): ModuleList(
+        (0): TransformerBlock(
+          (attention): MultiHeadedAttention(heads=1, d_model=128, dropout=0.1)
+          (feed_forward): PositionwiseFeedForward(
+            (w_1): Linear(in_features=128, out_features=512, bias=True)
+            (w_2): Linear(in_features=512, out_features=128, bias=True)
+            (dropout): Dropout(p=0.5, inplace=False)
+            (activation): GELU(approximate='none')
+          )
+          (input_sublayer): SublayerConnection(
+            (norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+            (dropout): Dropout(p=0.5, inplace=False)
+          )
+          (output_sublayer): SublayerConnection(
+            (norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+            (dropout): Dropout(p=0.5, inplace=False)
+          )
+          (dropout): Dropout(p=0.5, inplace=False)
+        )
+      )
+    )
+  )
+  (fc): Linear(in_features=384, out_features=1324, bias=True)
+)
+2026-04-17 17:10:47 Metrics: ['jaccard_samples', 'f1_samples', 'pr_auc_samples']
+2026-04-17 17:10:47 Device: cuda
+2026-04-17 17:10:47 
+2026-04-17 17:10:47 Training:
+2026-04-17 17:10:47 Batch size: 32
+2026-04-17 17:10:47 Optimizer: <class 'torch.optim.adam.Adam'>
+2026-04-17 17:10:47 Optimizer params: {'lr': 0.001}
+2026-04-17 17:10:47 Weight decay: 0.0
+2026-04-17 17:10:47 Max grad norm: None
+2026-04-17 17:10:47 Val dataloader: <torch.utils.data.dataloader.DataLoader object at 0x000002A7768A51F0>
+2026-04-17 17:10:47 Monitor: pr_auc_samples
+2026-04-17 17:10:47 Monitor criterion: max
+2026-04-17 17:10:47 Epochs: 3
+2026-04-17 17:10:47 Patience: None
+2026-04-17 17:10:47 
+2026-04-17 17:10:53 --- Train epoch-0, step-355 ---
+2026-04-17 17:10:53 loss: 6.9468
+2026-04-17 17:10:53 --- Eval epoch-0, step-355 ---
+2026-04-17 17:10:53 jaccard_samples: 0.2574
+2026-04-17 17:10:53 f1_samples: 0.4035
+2026-04-17 17:10:53 pr_auc_samples: 0.4165
+2026-04-17 17:10:53 loss: 1.3465
+2026-04-17 17:10:53 New best pr_auc_samples score (0.4165) at epoch-0, step-355
+2026-04-17 17:10:53 
+2026-04-17 17:10:59 --- Train epoch-1, step-710 ---
+2026-04-17 17:10:59 loss: 1.1650
+2026-04-17 17:11:00 --- Eval epoch-1, step-710 ---
+2026-04-17 17:11:00 jaccard_samples: 0.2890
+2026-04-17 17:11:00 f1_samples: 0.4416
+2026-04-17 17:11:00 pr_auc_samples: 0.4416
+2026-04-17 17:11:00 loss: 0.7332
+2026-04-17 17:11:00 New best pr_auc_samples score (0.4416) at epoch-1, step-710
+2026-04-17 17:11:00 
+2026-04-17 17:11:05 --- Train epoch-2, step-1065 ---
+2026-04-17 17:11:05 loss: 0.7540
+2026-04-17 17:11:06 --- Eval epoch-2, step-1065 ---
+2026-04-17 17:11:06 jaccard_samples: 0.2819
+2026-04-17 17:11:06 f1_samples: 0.4327
+2026-04-17 17:11:06 pr_auc_samples: 0.4424
+2026-04-17 17:11:06 loss: 0.5467
+2026-04-17 17:11:06 New best pr_auc_samples score (0.4424) at epoch-2, step-1065
+2026-04-17 17:11:06 Loaded best model
