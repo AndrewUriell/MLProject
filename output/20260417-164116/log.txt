@@ -1,0 +1,63 @@
+2026-04-17 16:41:16 RNN(
+  (embedding_model): EmbeddingModel(embedding_layers=ModuleDict(
+    (conditions): Embedding(3999, 128, padding_idx=0)
+    (procedures): Embedding(1297, 128, padding_idx=0)
+    (drugs): Embedding(2530, 128, padding_idx=0)
+  ))
+  (rnn): ModuleDict(
+    (conditions): RNNLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (rnn): GRU(128, 128, batch_first=True)
+    )
+    (procedures): RNNLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (rnn): GRU(128, 128, batch_first=True)
+    )
+    (drugs): RNNLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (rnn): GRU(128, 128, batch_first=True)
+    )
+  )
+  (fc): Linear(in_features=384, out_features=1, bias=True)
+)
+2026-04-17 16:41:16 Metrics: None
+2026-04-17 16:41:16 Device: cuda
+2026-04-17 16:41:16 
+2026-04-17 16:41:16 Training:
+2026-04-17 16:41:16 Batch size: 32
+2026-04-17 16:41:16 Optimizer: <class 'torch.optim.adam.Adam'>
+2026-04-17 16:41:16 Optimizer params: {'lr': 0.001}
+2026-04-17 16:41:16 Weight decay: 0.0
+2026-04-17 16:41:16 Max grad norm: None
+2026-04-17 16:41:16 Val dataloader: <torch.utils.data.dataloader.DataLoader object at 0x00000261E0F95190>
+2026-04-17 16:41:16 Monitor: roc_auc
+2026-04-17 16:41:16 Monitor criterion: max
+2026-04-17 16:41:16 Epochs: 3
+2026-04-17 16:41:16 Patience: None
+2026-04-17 16:41:16 
+2026-04-17 16:41:23 --- Train epoch-0, step-239 ---
+2026-04-17 16:41:23 loss: 0.5931
+2026-04-17 16:41:24 --- Eval epoch-0, step-239 ---
+2026-04-17 16:41:24 pr_auc: 0.3851
+2026-04-17 16:41:24 roc_auc: 0.6088
+2026-04-17 16:41:24 f1: 0.0000
+2026-04-17 16:41:24 loss: 0.6228
+2026-04-17 16:41:24 New best roc_auc score (0.6088) at epoch-0, step-239
+2026-04-17 16:41:24 
+2026-04-17 16:41:31 --- Train epoch-1, step-478 ---
+2026-04-17 16:41:31 loss: 0.5675
+2026-04-17 16:41:31 --- Eval epoch-1, step-478 ---
+2026-04-17 16:41:31 pr_auc: 0.4111
+2026-04-17 16:41:31 roc_auc: 0.6138
+2026-04-17 16:41:31 f1: 0.1111
+2026-04-17 16:41:31 loss: 0.6087
+2026-04-17 16:41:31 New best roc_auc score (0.6138) at epoch-1, step-478
+2026-04-17 16:41:31 
+2026-04-17 16:41:38 --- Train epoch-2, step-717 ---
+2026-04-17 16:41:38 loss: 0.5481
+2026-04-17 16:41:38 --- Eval epoch-2, step-717 ---
+2026-04-17 16:41:38 pr_auc: 0.4138
+2026-04-17 16:41:38 roc_auc: 0.6113
+2026-04-17 16:41:38 f1: 0.1429
+2026-04-17 16:41:38 loss: 0.6283
+2026-04-17 16:41:38 Loaded best model
