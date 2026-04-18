@@ -5,7 +5,9 @@ from pyhealth.datasets import MIMIC3Dataset, split_by_patient
 from pyhealth.tasks.drug_recommendation import DrugRecommendationMIMIC3
 
 
-def load_common_config(config_path: str = "configs/common.yaml") -> dict:
+def load_common_config(config_path: str = None) -> dict:
+    if config_path is None:
+        config_path = Path(__file__).resolve().parents[2] / "configs" / "common.yaml"
     with open(config_path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
@@ -43,7 +45,7 @@ def split_drug_recommendation_dataset(drug_dataset, config: dict):
     return train_dataset, val_dataset, test_dataset
 
 
-def get_drug_recommendation_data_splits(config_path: str = "configs/common.yaml"):
+def get_drug_recommendation_data_splits(config_path: str = None):
     config = load_common_config(config_path)
     drug_dataset = build_drug_recommendation_dataset(config)
     train_dataset, val_dataset, test_dataset = split_drug_recommendation_dataset(
@@ -52,7 +54,7 @@ def get_drug_recommendation_data_splits(config_path: str = "configs/common.yaml"
     return drug_dataset, train_dataset, val_dataset, test_dataset
 
 
-def get_drug_recommendation_split_summary(config_path: str = "configs/common.yaml") -> dict:
+def get_drug_recommendation_split_summary(config_path: str = None) -> dict:
     drug_dataset, train_dataset, val_dataset, test_dataset = get_drug_recommendation_data_splits(
         config_path
     )

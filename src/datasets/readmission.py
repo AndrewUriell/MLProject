@@ -7,7 +7,9 @@ from pyhealth.datasets import MIMIC3Dataset, split_by_patient
 from pyhealth.tasks.readmission_prediction import ReadmissionPredictionMIMIC3
 
 
-def load_common_config(config_path: str = "configs/common.yaml") -> dict:
+def load_common_config(config_path: str = None) -> dict:
+    if config_path is None:
+        config_path = Path(__file__).resolve().parents[2] / "configs" / "common.yaml"
     with open(config_path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
@@ -61,7 +63,7 @@ def get_binary_label_counts(dataset, label_key: str = "readmission") -> dict:
     return dict(Counter(labels))
 
 
-def get_readmission_data_splits(config_path: str = "configs/common.yaml"):
+def get_readmission_data_splits(config_path: str = None):
     config = load_common_config(config_path)
     readmission_dataset = build_readmission_dataset(config)
     train_dataset, val_dataset, test_dataset = split_readmission_dataset(
@@ -70,7 +72,7 @@ def get_readmission_data_splits(config_path: str = "configs/common.yaml"):
     return readmission_dataset, train_dataset, val_dataset, test_dataset
 
 
-def get_readmission_split_summary(config_path: str = "configs/common.yaml") -> dict:
+def get_readmission_split_summary(config_path: str = None) -> dict:
     readmission_dataset, train_dataset, val_dataset, test_dataset = get_readmission_data_splits(
         config_path
     )
