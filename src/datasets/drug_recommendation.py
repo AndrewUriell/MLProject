@@ -13,7 +13,8 @@ def load_common_config(config_path: str = None) -> dict:
 
 
 def build_mimic3_base_dataset(config: dict) -> MIMIC3Dataset:
-    dataset_root = Path(config["dataset_root"])
+    project_root = Path(__file__).resolve().parents[2]
+    dataset_root = project_root / Path(config["dataset_root"])
 
     base_dataset = MIMIC3Dataset(
         root=str(dataset_root),

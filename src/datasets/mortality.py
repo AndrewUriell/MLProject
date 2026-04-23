@@ -6,13 +6,16 @@ from pyhealth.datasets import MIMIC3Dataset, split_by_patient
 from pyhealth.tasks.mortality_prediction import MortalityPredictionMIMIC3
 
 
-def load_common_config(config_path: str = "configs/common.yaml") -> dict:
+def load_common_config(config_path: str = None) -> dict:
+    if config_path is None:
+        config_path = Path(__file__).resolve().parents[2] / "configs" / "common.yaml"
     with open(config_path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
 def build_mimic3_base_dataset(config: dict) -> MIMIC3Dataset:
-    dataset_root = Path(config["dataset_root"])
+    project_root = Path(__file__).resolve().parents[2]
+    dataset_root = project_root / Path(config["dataset_root"])
 
     base_dataset = MIMIC3Dataset(
         root=str(dataset_root),
@@ -55,7 +58,7 @@ def get_binary_label_counts(dataset, label_key: str = "mortality") -> dict:
     return dict(Counter(labels))
 
 
-def get_mortality_data_splits(config_path: str = "configs/common.yaml"):
+def get_mortality_data_splits(config_path: str = None):
     config = load_common_config(config_path)
     mortality_dataset = build_mortality_dataset(config)
     train_dataset, val_dataset, test_dataset = split_mortality_dataset(
@@ -64,7 +67,7 @@ def get_mortality_data_splits(config_path: str = "configs/common.yaml"):
     return mortality_dataset, train_dataset, val_dataset, test_dataset
 
 
-def get_mortality_split_summary(config_path: str = "configs/common.yaml") -> dict:
+def get_mortality_split_summary(config_path: str = None) -> dict:
     mortality_dataset, train_dataset, val_dataset, test_dataset = get_mortality_data_splits(
         config_path
     )
