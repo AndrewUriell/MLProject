@@ -52,6 +52,7 @@ def main():
         val_dataloader=val_loader,
         epochs=epochs,
         monitor="pr_auc_samples",
+        patience=15,
     )
  
     print("Evaluating on test set...")
