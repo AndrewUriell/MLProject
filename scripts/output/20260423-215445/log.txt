@@ -1,0 +1,46 @@
+2026-04-23 21:54:45 RETAINModel(
+  (embedding_model): EmbeddingModel(embedding_layers=ModuleDict(
+    (conditions): Embedding(4102, 128, padding_idx=0)
+    (procedures): Embedding(1304, 128, padding_idx=0)
+    (drugs): Embedding(2624, 128, padding_idx=0)
+  ))
+  (retain): ModuleDict(
+    (conditions): RETAINLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+    (procedures): RETAINLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+    (drugs): RETAINLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+  )
+  (fc): Linear(in_features=384, out_features=1, bias=True)
+)
+2026-04-23 21:54:45 Metrics: None
+2026-04-23 21:54:45 Device: cuda
+2026-04-23 21:54:45 
+2026-04-23 21:54:45 Training:
+2026-04-23 21:54:45 Batch size: 32
+2026-04-23 21:54:45 Optimizer: <class 'torch.optim.adam.Adam'>
+2026-04-23 21:54:45 Optimizer params: {'lr': 0.001}
+2026-04-23 21:54:45 Weight decay: 0.0
+2026-04-23 21:54:45 Max grad norm: None
+2026-04-23 21:54:45 Val dataloader: <torch.utils.data.dataloader.DataLoader object at 0x7cc53552a0c0>
+2026-04-23 21:54:45 Monitor: roc_auc
+2026-04-23 21:54:45 Monitor criterion: max
+2026-04-23 21:54:45 Epochs: 30
+2026-04-23 21:54:45 Patience: None
+2026-04-23 21:54:45 

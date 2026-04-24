@@ -1,0 +1,73 @@
+2026-04-23 11:59:59 RETAINModel(
+  (embedding_model): EmbeddingModel(embedding_layers=ModuleDict(
+    (conditions): Embedding(4102, 128, padding_idx=0)
+    (procedures): Embedding(1304, 128, padding_idx=0)
+    (drugs): Embedding(2624, 128, padding_idx=0)
+  ))
+  (retain): ModuleDict(
+    (conditions): RETAINLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+    (procedures): RETAINLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+    (drugs): RETAINLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+  )
+  (fc): Linear(in_features=384, out_features=1, bias=True)
+)
+2026-04-23 11:59:59 Metrics: None
+2026-04-23 11:59:59 Device: cuda
+2026-04-23 11:59:59 
+2026-04-23 11:59:59 Training:
+2026-04-23 11:59:59 Batch size: 32
+2026-04-23 11:59:59 Optimizer: <class 'torch.optim.adam.Adam'>
+2026-04-23 11:59:59 Optimizer params: {'lr': 0.001}
+2026-04-23 11:59:59 Weight decay: 0.0
+2026-04-23 11:59:59 Max grad norm: None
+2026-04-23 11:59:59 Val dataloader: <torch.utils.data.dataloader.DataLoader object at 0x7acf4d6582f0>
+2026-04-23 11:59:59 Monitor: roc_auc
+2026-04-23 11:59:59 Monitor criterion: max
+2026-04-23 11:59:59 Epochs: 3
+2026-04-23 11:59:59 Patience: None
+2026-04-23 11:59:59 
+2026-04-23 12:00:16 --- Train epoch-0, step-242 ---
+2026-04-23 12:00:16 loss: 0.4232
+2026-04-23 12:00:17 --- Eval epoch-0, step-242 ---
+2026-04-23 12:00:17 pr_auc: 0.1543
+2026-04-23 12:00:17 roc_auc: 0.5264
+2026-04-23 12:00:17 f1: 0.0000
+2026-04-23 12:00:17 loss: 0.4053
+2026-04-23 12:00:17 New best roc_auc score (0.5264) at epoch-0, step-242
+2026-04-23 12:00:17 
+2026-04-23 12:00:34 --- Train epoch-1, step-484 ---
+2026-04-23 12:00:34 loss: 0.3606
+2026-04-23 12:00:34 --- Eval epoch-1, step-484 ---
+2026-04-23 12:00:34 pr_auc: 0.1639
+2026-04-23 12:00:34 roc_auc: 0.5459
+2026-04-23 12:00:34 f1: 0.0000
+2026-04-23 12:00:34 loss: 0.4037
+2026-04-23 12:00:34 New best roc_auc score (0.5459) at epoch-1, step-484
+2026-04-23 12:00:34 
+2026-04-23 12:00:51 --- Train epoch-2, step-726 ---
+2026-04-23 12:00:51 loss: 0.3436
+2026-04-23 12:00:51 --- Eval epoch-2, step-726 ---
+2026-04-23 12:00:51 pr_auc: 0.1813
+2026-04-23 12:00:51 roc_auc: 0.5683
+2026-04-23 12:00:51 f1: 0.0000
+2026-04-23 12:00:51 loss: 0.4022
+2026-04-23 12:00:51 New best roc_auc score (0.5683) at epoch-2, step-726
+2026-04-23 12:00:51 Loaded best model
