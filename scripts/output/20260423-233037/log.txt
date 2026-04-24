@@ -1,0 +1,262 @@
+2026-04-23 23:30:37 RETAIN(
+  (embedding_model): EmbeddingModel(embedding_layers=ModuleDict(
+    (conditions): Embedding(4493, 128)
+    (procedures): Embedding(1414, 128)
+    (drugs_hist): Embedding(1164, 128)
+  ))
+  (retain): ModuleDict(
+    (conditions): RETAINLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+    (procedures): RETAINLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+    (drugs_hist): RETAINLayer(
+      (dropout_layer): Dropout(p=0.5, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+  )
+  (fc): Linear(in_features=384, out_features=1324, bias=True)
+)
+2026-04-23 23:30:37 Metrics: ['jaccard_samples', 'f1_samples', 'pr_auc_samples']
+2026-04-23 23:30:37 Device: cuda
+2026-04-23 23:30:37 
+2026-04-23 23:30:37 Training:
+2026-04-23 23:30:37 Batch size: 32
+2026-04-23 23:30:37 Optimizer: <class 'torch.optim.adam.Adam'>
+2026-04-23 23:30:37 Optimizer params: {'lr': 0.001}
+2026-04-23 23:30:37 Weight decay: 0.0
+2026-04-23 23:30:37 Max grad norm: None
+2026-04-23 23:30:37 Val dataloader: <torch.utils.data.dataloader.DataLoader object at 0x7f231dfff140>
+2026-04-23 23:30:37 Monitor: pr_auc_samples
+2026-04-23 23:30:37 Monitor criterion: max
+2026-04-23 23:30:37 Epochs: 50
+2026-04-23 23:30:37 Patience: 15
+2026-04-23 23:30:37 
+2026-04-23 23:30:49 --- Train epoch-0, step-355 ---
+2026-04-23 23:30:49 loss: 1.8844
+2026-04-23 23:30:50 --- Eval epoch-0, step-355 ---
+2026-04-23 23:30:50 jaccard_samples: 0.2659
+2026-04-23 23:30:50 f1_samples: 0.4137
+2026-04-23 23:30:50 pr_auc_samples: 0.4676
+2026-04-23 23:30:50 loss: 0.2949
+2026-04-23 23:30:50 New best pr_auc_samples score (0.4676) at epoch-0, step-355
+2026-04-23 23:30:50 
+2026-04-23 23:31:01 --- Train epoch-1, step-710 ---
+2026-04-23 23:31:01 loss: 0.2242
+2026-04-23 23:31:02 --- Eval epoch-1, step-710 ---
+2026-04-23 23:31:02 jaccard_samples: 0.3095
+2026-04-23 23:31:02 f1_samples: 0.4656
+2026-04-23 23:31:02 pr_auc_samples: 0.4723
+2026-04-23 23:31:02 loss: 0.1395
+2026-04-23 23:31:02 New best pr_auc_samples score (0.4723) at epoch-1, step-710
+2026-04-23 23:31:02 
+2026-04-23 23:31:13 --- Train epoch-2, step-1065 ---
+2026-04-23 23:31:13 loss: 0.1326
+2026-04-23 23:31:14 --- Eval epoch-2, step-1065 ---
+2026-04-23 23:31:14 jaccard_samples: 0.3007
+2026-04-23 23:31:14 f1_samples: 0.4544
+2026-04-23 23:31:14 pr_auc_samples: 0.4970
+2026-04-23 23:31:14 loss: 0.0958
+2026-04-23 23:31:14 New best pr_auc_samples score (0.4970) at epoch-2, step-1065
+2026-04-23 23:31:14 
+2026-04-23 23:31:25 --- Train epoch-3, step-1420 ---
+2026-04-23 23:31:25 loss: 0.0923
+2026-04-23 23:31:26 --- Eval epoch-3, step-1420 ---
+2026-04-23 23:31:26 jaccard_samples: 0.3122
+2026-04-23 23:31:26 f1_samples: 0.4683
+2026-04-23 23:31:26 pr_auc_samples: 0.5110
+2026-04-23 23:31:26 loss: 0.1024
+2026-04-23 23:31:26 New best pr_auc_samples score (0.5110) at epoch-3, step-1420
+2026-04-23 23:31:26 
+2026-04-23 23:31:40 --- Train epoch-4, step-1775 ---
+2026-04-23 23:31:40 loss: 0.1029
+2026-04-23 23:31:41 --- Eval epoch-4, step-1775 ---
+2026-04-23 23:31:41 jaccard_samples: 0.3453
+2026-04-23 23:31:41 f1_samples: 0.5051
+2026-04-23 23:31:41 pr_auc_samples: 0.5448
+2026-04-23 23:31:41 loss: 0.0752
+2026-04-23 23:31:41 New best pr_auc_samples score (0.5448) at epoch-4, step-1775
+2026-04-23 23:31:41 
+2026-04-23 23:31:53 --- Train epoch-5, step-2130 ---
+2026-04-23 23:31:53 loss: 0.0733
+2026-04-23 23:31:55 --- Eval epoch-5, step-2130 ---
+2026-04-23 23:31:55 jaccard_samples: 0.3056
+2026-04-23 23:31:55 f1_samples: 0.4612
+2026-04-23 23:31:55 pr_auc_samples: 0.5030
+2026-04-23 23:31:55 loss: 0.0795
+2026-04-23 23:31:55 
+2026-04-23 23:32:08 --- Train epoch-6, step-2485 ---
+2026-04-23 23:32:08 loss: 0.0806
+2026-04-23 23:32:09 --- Eval epoch-6, step-2485 ---
+2026-04-23 23:32:09 jaccard_samples: 0.2375
+2026-04-23 23:32:09 f1_samples: 0.3779
+2026-04-23 23:32:09 pr_auc_samples: 0.3134
+2026-04-23 23:32:09 loss: 0.1015
+2026-04-23 23:32:09 
+2026-04-23 23:32:21 --- Train epoch-7, step-2840 ---
+2026-04-23 23:32:21 loss: 0.0798
+2026-04-23 23:32:23 --- Eval epoch-7, step-2840 ---
+2026-04-23 23:32:23 jaccard_samples: 0.2728
+2026-04-23 23:32:23 f1_samples: 0.4226
+2026-04-23 23:32:23 pr_auc_samples: 0.3978
+2026-04-23 23:32:23 loss: 0.0784
+2026-04-23 23:32:23 
+2026-04-23 23:32:36 --- Train epoch-8, step-3195 ---
+2026-04-23 23:32:36 loss: 0.1007
+2026-04-23 23:32:37 --- Eval epoch-8, step-3195 ---
+2026-04-23 23:32:37 jaccard_samples: 0.3297
+2026-04-23 23:32:37 f1_samples: 0.4863
+2026-04-23 23:32:37 pr_auc_samples: 0.5119
+2026-04-23 23:32:37 loss: 0.0851
+2026-04-23 23:32:37 
+2026-04-23 23:32:49 --- Train epoch-9, step-3550 ---
+2026-04-23 23:32:49 loss: 0.0690
+2026-04-23 23:32:51 --- Eval epoch-9, step-3550 ---
+2026-04-23 23:32:51 jaccard_samples: 0.3512
+2026-04-23 23:32:51 f1_samples: 0.5109
+2026-04-23 23:32:51 pr_auc_samples: 0.5605
+2026-04-23 23:32:51 loss: 0.0634
+2026-04-23 23:32:51 New best pr_auc_samples score (0.5605) at epoch-9, step-3550
+2026-04-23 23:32:51 
+2026-04-23 23:33:05 --- Train epoch-10, step-3905 ---
+2026-04-23 23:33:05 loss: 0.0650
+2026-04-23 23:33:06 --- Eval epoch-10, step-3905 ---
+2026-04-23 23:33:06 jaccard_samples: 0.3529
+2026-04-23 23:33:06 f1_samples: 0.5116
+2026-04-23 23:33:06 pr_auc_samples: 0.5558
+2026-04-23 23:33:06 loss: 0.0620
+2026-04-23 23:33:06 
+2026-04-23 23:33:20 --- Train epoch-11, step-4260 ---
+2026-04-23 23:33:20 loss: 0.0623
+2026-04-23 23:33:21 --- Eval epoch-11, step-4260 ---
+2026-04-23 23:33:21 jaccard_samples: 0.3055
+2026-04-23 23:33:21 f1_samples: 0.4613
+2026-04-23 23:33:21 pr_auc_samples: 0.5048
+2026-04-23 23:33:21 loss: 0.0701
+2026-04-23 23:33:21 
+2026-04-23 23:33:38 --- Train epoch-12, step-4615 ---
+2026-04-23 23:33:38 loss: 0.0657
+2026-04-23 23:33:39 --- Eval epoch-12, step-4615 ---
+2026-04-23 23:33:39 jaccard_samples: 0.3386
+2026-04-23 23:33:39 f1_samples: 0.4970
+2026-04-23 23:33:39 pr_auc_samples: 0.5327
+2026-04-23 23:33:39 loss: 0.0669
+2026-04-23 23:33:39 
+2026-04-23 23:33:55 --- Train epoch-13, step-4970 ---
+2026-04-23 23:33:55 loss: 0.0605
+2026-04-23 23:33:56 --- Eval epoch-13, step-4970 ---
+2026-04-23 23:33:56 jaccard_samples: 0.3361
+2026-04-23 23:33:56 f1_samples: 0.4952
+2026-04-23 23:33:56 pr_auc_samples: 0.5209
+2026-04-23 23:33:56 loss: 0.0649
+2026-04-23 23:33:56 
+2026-04-23 23:34:15 --- Train epoch-14, step-5325 ---
+2026-04-23 23:34:15 loss: 0.0609
+2026-04-23 23:34:16 --- Eval epoch-14, step-5325 ---
+2026-04-23 23:34:16 jaccard_samples: 0.3012
+2026-04-23 23:34:16 f1_samples: 0.4559
+2026-04-23 23:34:16 pr_auc_samples: 0.4981
+2026-04-23 23:34:16 loss: 0.0747
+2026-04-23 23:34:16 
+2026-04-23 23:34:33 --- Train epoch-15, step-5680 ---
+2026-04-23 23:34:33 loss: 0.0619
+2026-04-23 23:34:34 --- Eval epoch-15, step-5680 ---
+2026-04-23 23:34:34 jaccard_samples: 0.2221
+2026-04-23 23:34:34 f1_samples: 0.3580
+2026-04-23 23:34:34 pr_auc_samples: 0.3209
+2026-04-23 23:34:34 loss: 0.1041
+2026-04-23 23:34:34 
+2026-04-23 23:34:53 --- Train epoch-16, step-6035 ---
+2026-04-23 23:34:53 loss: 0.3157
+2026-04-23 23:34:54 --- Eval epoch-16, step-6035 ---
+2026-04-23 23:34:54 jaccard_samples: 0.3012
+2026-04-23 23:34:54 f1_samples: 0.4535
+2026-04-23 23:34:54 pr_auc_samples: 0.4874
+2026-04-23 23:34:54 loss: 0.1059
+2026-04-23 23:34:54 
+2026-04-23 23:35:14 --- Train epoch-17, step-6390 ---
+2026-04-23 23:35:14 loss: 0.0953
+2026-04-23 23:35:15 --- Eval epoch-17, step-6390 ---
+2026-04-23 23:35:15 jaccard_samples: 0.3546
+2026-04-23 23:35:15 f1_samples: 0.5149
+2026-04-23 23:35:15 pr_auc_samples: 0.5579
+2026-04-23 23:35:15 loss: 0.0656
+2026-04-23 23:35:15 
+2026-04-23 23:35:33 --- Train epoch-18, step-6745 ---
+2026-04-23 23:35:33 loss: 0.0628
+2026-04-23 23:35:35 --- Eval epoch-18, step-6745 ---
+2026-04-23 23:35:35 jaccard_samples: 0.3537
+2026-04-23 23:35:35 f1_samples: 0.5143
+2026-04-23 23:35:35 pr_auc_samples: 0.5495
+2026-04-23 23:35:35 loss: 0.0631
+2026-04-23 23:35:35 
+2026-04-23 23:35:54 --- Train epoch-19, step-7100 ---
+2026-04-23 23:35:54 loss: 0.0600
+2026-04-23 23:35:55 --- Eval epoch-19, step-7100 ---
+2026-04-23 23:35:55 jaccard_samples: 0.3754
+2026-04-23 23:35:55 f1_samples: 0.5370
+2026-04-23 23:35:55 pr_auc_samples: 0.5905
+2026-04-23 23:35:55 loss: 0.0597
+2026-04-23 23:35:55 New best pr_auc_samples score (0.5905) at epoch-19, step-7100
+2026-04-23 23:35:55 
+2026-04-23 23:36:15 --- Train epoch-20, step-7455 ---
+2026-04-23 23:36:15 loss: 0.0571
+2026-04-23 23:36:17 --- Eval epoch-20, step-7455 ---
+2026-04-23 23:36:17 jaccard_samples: 0.3798
+2026-04-23 23:36:17 f1_samples: 0.5417
+2026-04-23 23:36:17 pr_auc_samples: 0.5933
+2026-04-23 23:36:17 loss: 0.0577
+2026-04-23 23:36:17 New best pr_auc_samples score (0.5933) at epoch-20, step-7455
+2026-04-23 23:36:17 
+2026-04-23 23:36:37 --- Train epoch-21, step-7810 ---
+2026-04-23 23:36:37 loss: 0.0570
+2026-04-23 23:36:39 --- Eval epoch-21, step-7810 ---
+2026-04-23 23:36:39 jaccard_samples: 0.3746
+2026-04-23 23:36:39 f1_samples: 0.5365
+2026-04-23 23:36:39 pr_auc_samples: 0.5884
+2026-04-23 23:36:39 loss: 0.0587
+2026-04-23 23:36:39 
+2026-04-23 23:36:59 --- Train epoch-22, step-8165 ---
+2026-04-23 23:36:59 loss: 0.0563
+2026-04-23 23:37:01 --- Eval epoch-22, step-8165 ---
+2026-04-23 23:37:01 jaccard_samples: 0.3674
+2026-04-23 23:37:01 f1_samples: 0.5294
+2026-04-23 23:37:01 pr_auc_samples: 0.5847
+2026-04-23 23:37:01 loss: 0.0619
+2026-04-23 23:37:01 
+2026-04-23 23:37:23 --- Train epoch-23, step-8520 ---
+2026-04-23 23:37:23 loss: 0.0579
+2026-04-23 23:37:25 --- Eval epoch-23, step-8520 ---
+2026-04-23 23:37:25 jaccard_samples: 0.3508
+2026-04-23 23:37:25 f1_samples: 0.5112
+2026-04-23 23:37:25 pr_auc_samples: 0.5735
+2026-04-23 23:37:25 loss: 0.0628
+2026-04-23 23:37:25 
+2026-04-23 23:37:47 --- Train epoch-24, step-8875 ---
+2026-04-23 23:37:47 loss: 0.0555
+2026-04-23 23:37:48 --- Eval epoch-24, step-8875 ---
+2026-04-23 23:37:48 jaccard_samples: 0.3670
+2026-04-23 23:37:48 f1_samples: 0.5287
+2026-04-23 23:37:48 pr_auc_samples: 0.5720
+2026-04-23 23:37:48 loss: 0.0586
+2026-04-23 23:37:48 
+2026-04-23 23:38:08 --- Train epoch-25, step-9230 ---
+2026-04-23 23:38:08 loss: 0.0556
+2026-04-23 23:38:10 --- Eval epoch-25, step-9230 ---
+2026-04-23 23:38:10 jaccard_samples: 0.1782
+2026-04-23 23:38:10 f1_samples: 0.2974
+2026-04-23 23:38:10 pr_auc_samples: 0.2421
+2026-04-23 23:38:10 loss: 0.1492
+2026-04-23 23:38:10 

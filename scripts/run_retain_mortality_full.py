@@ -10,11 +10,13 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 from pyhealth.datasets import get_dataloader
 from src.models.retain_model import RETAINModel
 from pyhealth.trainer import Trainer
+from pyhealth.utils import set_seed
 
 from src.datasets.mortality import load_common_config, get_mortality_data_splits
 
 
 def main():
+    set_seed(42)
     config = load_common_config()
     batch_size = config["training"]["batch_size"]
     epochs = config["training"]["epochs"]

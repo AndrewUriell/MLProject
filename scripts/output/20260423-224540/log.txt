@@ -1,0 +1,155 @@
+2026-04-23 22:45:40 RETAINModel(
+  (embedding_model): EmbeddingModel(embedding_layers=ModuleDict(
+    (conditions): Embedding(4102, 128, padding_idx=0)
+    (procedures): Embedding(1304, 128, padding_idx=0)
+    (drugs): Embedding(2624, 128, padding_idx=0)
+  ))
+  (retain): ModuleDict(
+    (conditions): RETAINLayer(
+      (dropout_layer): Dropout(p=0.3, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+    (procedures): RETAINLayer(
+      (dropout_layer): Dropout(p=0.3, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+    (drugs): RETAINLayer(
+      (dropout_layer): Dropout(p=0.3, inplace=False)
+      (alpha_gru): GRU(128, 128, batch_first=True)
+      (alpha_li): Linear(in_features=128, out_features=1, bias=True)
+      (beta_gru): GRU(128, 128, batch_first=True)
+      (beta_li): Linear(in_features=128, out_features=128, bias=True)
+    )
+  )
+  (fc): Linear(in_features=384, out_features=1, bias=True)
+  (loss_fn): BCEWithLogitsLoss()
+)
+2026-04-23 22:45:40 Metrics: None
+2026-04-23 22:45:40 Device: cuda
+2026-04-23 22:45:40 
+2026-04-23 22:45:40 Training:
+2026-04-23 22:45:40 Batch size: 32
+2026-04-23 22:45:40 Optimizer: <class 'torch.optim.adam.Adam'>
+2026-04-23 22:45:40 Optimizer params: {'lr': 0.001}
+2026-04-23 22:45:40 Weight decay: 0.0001
+2026-04-23 22:45:40 Max grad norm: None
+2026-04-23 22:45:40 Val dataloader: <torch.utils.data.dataloader.DataLoader object at 0x721ea1199d00>
+2026-04-23 22:45:40 Monitor: roc_auc
+2026-04-23 22:45:40 Monitor criterion: max
+2026-04-23 22:45:40 Epochs: 30
+2026-04-23 22:45:40 Patience: 10
+2026-04-23 22:45:40 
+2026-04-23 22:46:05 --- Train epoch-0, step-242 ---
+2026-04-23 22:46:05 loss: 0.4255
+2026-04-23 22:46:06 --- Eval epoch-0, step-242 ---
+2026-04-23 22:46:06 pr_auc: 0.1469
+2026-04-23 22:46:06 roc_auc: 0.5113
+2026-04-23 22:46:06 f1: 0.0000
+2026-04-23 22:46:06 loss: 0.4121
+2026-04-23 22:46:06 New best roc_auc score (0.5113) at epoch-0, step-242
+2026-04-23 22:46:06 
+2026-04-23 22:46:26 --- Train epoch-1, step-484 ---
+2026-04-23 22:46:26 loss: 0.3661
+2026-04-23 22:46:27 --- Eval epoch-1, step-484 ---
+2026-04-23 22:46:27 pr_auc: 0.1610
+2026-04-23 22:46:27 roc_auc: 0.5248
+2026-04-23 22:46:27 f1: 0.0000
+2026-04-23 22:46:27 loss: 0.4102
+2026-04-23 22:46:27 New best roc_auc score (0.5248) at epoch-1, step-484
+2026-04-23 22:46:27 
+2026-04-23 22:46:48 --- Train epoch-2, step-726 ---
+2026-04-23 22:46:48 loss: 0.3530
+2026-04-23 22:46:50 --- Eval epoch-2, step-726 ---
+2026-04-23 22:46:50 pr_auc: 0.1503
+2026-04-23 22:46:50 roc_auc: 0.5401
+2026-04-23 22:46:50 f1: 0.0000
+2026-04-23 22:46:50 loss: 0.4078
+2026-04-23 22:46:50 New best roc_auc score (0.5401) at epoch-2, step-726
+2026-04-23 22:46:50 
+2026-04-23 22:47:13 --- Train epoch-3, step-968 ---
+2026-04-23 22:47:13 loss: 0.3401
+2026-04-23 22:47:14 --- Eval epoch-3, step-968 ---
+2026-04-23 22:47:14 pr_auc: 0.1600
+2026-04-23 22:47:14 roc_auc: 0.5340
+2026-04-23 22:47:14 f1: 0.0000
+2026-04-23 22:47:14 loss: 0.4098
+2026-04-23 22:47:14 
+2026-04-23 22:47:34 --- Train epoch-4, step-1210 ---
+2026-04-23 22:47:34 loss: 0.3254
+2026-04-23 22:47:35 --- Eval epoch-4, step-1210 ---
+2026-04-23 22:47:35 pr_auc: 0.1539
+2026-04-23 22:47:35 roc_auc: 0.5400
+2026-04-23 22:47:35 f1: 0.0000
+2026-04-23 22:47:35 loss: 0.4152
+2026-04-23 22:47:35 
+2026-04-23 22:47:57 --- Train epoch-5, step-1452 ---
+2026-04-23 22:47:57 loss: 0.3135
+2026-04-23 22:47:58 --- Eval epoch-5, step-1452 ---
+2026-04-23 22:47:58 pr_auc: 0.1538
+2026-04-23 22:47:58 roc_auc: 0.5336
+2026-04-23 22:47:58 f1: 0.0000
+2026-04-23 22:47:58 loss: 0.4265
+2026-04-23 22:47:58 
+2026-04-23 22:48:20 --- Train epoch-6, step-1694 ---
+2026-04-23 22:48:20 loss: 0.2984
+2026-04-23 22:48:21 --- Eval epoch-6, step-1694 ---
+2026-04-23 22:48:21 pr_auc: 0.1601
+2026-04-23 22:48:21 roc_auc: 0.5391
+2026-04-23 22:48:21 f1: 0.0145
+2026-04-23 22:48:21 loss: 0.4296
+2026-04-23 22:48:21 
+2026-04-23 22:48:45 --- Train epoch-7, step-1936 ---
+2026-04-23 22:48:45 loss: 0.2765
+2026-04-23 22:48:46 --- Eval epoch-7, step-1936 ---
+2026-04-23 22:48:46 pr_auc: 0.1584
+2026-04-23 22:48:46 roc_auc: 0.5385
+2026-04-23 22:48:46 f1: 0.0146
+2026-04-23 22:48:46 loss: 0.4481
+2026-04-23 22:48:46 
+2026-04-23 22:49:08 --- Train epoch-8, step-2178 ---
+2026-04-23 22:49:08 loss: 0.2603
+2026-04-23 22:49:10 --- Eval epoch-8, step-2178 ---
+2026-04-23 22:49:10 pr_auc: 0.1520
+2026-04-23 22:49:10 roc_auc: 0.5100
+2026-04-23 22:49:10 f1: 0.0429
+2026-04-23 22:49:10 loss: 0.4671
+2026-04-23 22:49:10 
+2026-04-23 22:49:29 --- Train epoch-9, step-2420 ---
+2026-04-23 22:49:29 loss: 0.2345
+2026-04-23 22:49:30 --- Eval epoch-9, step-2420 ---
+2026-04-23 22:49:30 pr_auc: 0.1530
+2026-04-23 22:49:30 roc_auc: 0.5141
+2026-04-23 22:49:30 f1: 0.0278
+2026-04-23 22:49:30 loss: 0.4876
+2026-04-23 22:49:30 
+2026-04-23 22:49:50 --- Train epoch-10, step-2662 ---
+2026-04-23 22:49:50 loss: 0.2138
+2026-04-23 22:49:51 --- Eval epoch-10, step-2662 ---
+2026-04-23 22:49:51 pr_auc: 0.1488
+2026-04-23 22:49:51 roc_auc: 0.5155
+2026-04-23 22:49:51 f1: 0.0789
+2026-04-23 22:49:51 loss: 0.4993
+2026-04-23 22:49:51 
+2026-04-23 22:50:11 --- Train epoch-11, step-2904 ---
+2026-04-23 22:50:11 loss: 0.1871
+2026-04-23 22:50:11 --- Eval epoch-11, step-2904 ---
+2026-04-23 22:50:11 pr_auc: 0.1542
+2026-04-23 22:50:11 roc_auc: 0.5148
+2026-04-23 22:50:11 f1: 0.0881
+2026-04-23 22:50:11 loss: 0.5257
+2026-04-23 22:50:11 
+2026-04-23 22:50:30 --- Train epoch-12, step-3146 ---
+2026-04-23 22:50:30 loss: 0.1702
+2026-04-23 22:50:31 --- Eval epoch-12, step-3146 ---
+2026-04-23 22:50:31 pr_auc: 0.1534
+2026-04-23 22:50:31 roc_auc: 0.5311
+2026-04-23 22:50:31 f1: 0.0727
+2026-04-23 22:50:31 loss: 0.5327
+2026-04-23 22:50:31 Early stopping at epoch-12, step-3146
+2026-04-23 22:50:31 Loaded best model

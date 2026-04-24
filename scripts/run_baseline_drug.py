@@ -9,6 +9,7 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 from pyhealth.datasets import get_dataloader
 from pyhealth.models import Transformer
 from pyhealth.trainer import Trainer
+from pyhealth.utils import set_seed
 
 from src.datasets.drug_recommendation import (
     load_common_config,
@@ -18,6 +19,7 @@ from src.utils.metrics import precision_recall_at_k
 
 
 def main():
+    set_seed(42)
     config = load_common_config()
 
     batch_size = config["training"]["batch_size"]
