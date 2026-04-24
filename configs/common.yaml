@@ -8,7 +8,7 @@ split:
 
 training:
   batch_size: 32
-  epochs: 50
+  epochs: 120
   monitor: roc_auc
 
 readmission:

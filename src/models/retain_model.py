@@ -11,16 +11,20 @@ from pyhealth.models.embedding import EmbeddingModel
 # Attention layer for an individual feature stream (like for example conditions, procedures)
 class RETAINLayer(nn.Module):
  
-    def __init__(self, feature_size: int, dropout: float = 0.5):
+    def __init__(self, feature_size: int, dropout: float = 0.5, use_alpha: bool = True, use_beta: bool = True,):
         super(RETAINLayer, self).__init__()
         self.feature_size = feature_size
+        self.use_alpha = use_alpha
+        self.use_beta = use_beta
         self.dropout_layer = nn.Dropout(p=dropout)
- 
-        self.alpha_gru = nn.GRU(feature_size, feature_size, batch_first=True)
-        self.alpha_li = nn.Linear(feature_size, 1)
- 
-        self.beta_gru = nn.GRU(feature_size, feature_size, batch_first=True)
-        self.beta_li = nn.Linear(feature_size, feature_size)
+
+        if use_alpha:
+            self.alpha_gru = nn.GRU(feature_size, feature_size, batch_first=True)
+            self.alpha_li = nn.Linear(feature_size, 1)
+
+        if use_beta:
+            self.beta_gru = nn.GRU(feature_size, feature_size, batch_first=True)
+            self.beta_li = nn.Linear(feature_size, feature_size)
  
      # Each sequence will get flipped so process most recent visit first
     #NEED THIS AS IT DOESN'T USE SELF, CODE CRASHED WITHOUT IT
@@ -58,8 +62,18 @@ class RETAINLayer(nn.Module):
         lengths = lengths.clamp(min=1)
  
         rx = self.reverse_x(x, lengths)
-        attn_alpha = self.compute_alpha(rx, lengths, total_length)
-        attn_beta = self.compute_beta(rx, lengths, total_length)
+
+        #For abalation study I'm making alpha and beta "toggable", if it's off, we do uniform alpha
+        if self.use_alpha:
+            attn_alpha = self.compute_alpha(rx, lengths, total_length)
+        else:
+            attn_alpha = torch.ones(batch_size, total_length, 1, device=x.device) / total_length
+        
+        #Same for beta, if it's off we use identity
+        if self.use_beta:
+            attn_beta = self.compute_beta(rx, lengths, total_length)
+        else:
+            attn_beta = torch.ones(batch_size, total_length, self.feature_size, device=x.device)
  
         c = attn_alpha * attn_beta * x
         return torch.sum(c, dim=1)
@@ -68,7 +82,7 @@ class RETAINLayer(nn.Module):
 # Full RETAIN model
 class RETAINModel(BaseModel):
  
-    def __init__(self, dataset, embedding_dim: int = 128, dropout: float = 0.5):
+    def __init__(self, dataset, embedding_dim: int = 128, dropout: float = 0.5, use_alpha: bool = True, use_beta: bool = True):
         super(RETAINModel, self).__init__(dataset=dataset)
         self.embedding_dim = embedding_dim
  
@@ -80,7 +94,8 @@ class RETAINModel(BaseModel):
  
         self.retain = nn.ModuleDict()
         for feature_key in self.feature_keys:
-            self.retain[feature_key] = RETAINLayer(feature_size=embedding_dim, dropout=dropout)
+            self.retain[feature_key] = RETAINLayer(feature_size=embedding_dim, dropout=dropout, use_alpha=use_alpha, use_beta=use_beta)
+
  
         output_size = self.get_output_size()
         self.fc = nn.Linear(len(self.feature_keys) * embedding_dim, output_size)

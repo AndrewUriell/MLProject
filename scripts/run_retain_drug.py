@@ -11,6 +11,7 @@ from pyhealth.datasets import get_dataloader
 from src.models.retain_model import RETAINModel
 from pyhealth.trainer import Trainer
 from pyhealth.utils import set_seed
+import argparse
 
 from src.datasets.drug_recommendation import (
     load_common_config,
@@ -18,9 +19,25 @@ from src.datasets.drug_recommendation import (
 )
 from src.utils.metrics import precision_recall_at_k
  
- 
+
+#Flags for abalation
+ABLATION_MODES = {
+    "full":     {"use_alpha": True,  "use_beta": True},
+    "no_alpha": {"use_alpha": False, "use_beta": True},
+    "no_beta":  {"use_alpha": True,  "use_beta": False},
+    "empty": {"use_alpha": False,  "use_beta": False},
+}
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", choices=list(ABLATION_MODES.keys()), default="full")
+    return parser.parse_args()
+
+
 def main():
     set_seed(42)
+    args = parse_args()
+    mode = args.mode
     config = load_common_config()
     batch_size = config["training"]["batch_size"]
     epochs = config["training"]["epochs"]
@@ -38,8 +55,8 @@ def main():
     val_loader = get_dataloader(val_dataset, batch_size=batch_size, shuffle=False)
     test_loader = get_dataloader(test_dataset, batch_size=batch_size, shuffle=False)
  
-    print("Building RETAIN model...")
-    model = RETAINModel(dataset=sample_dataset)
+    print(f"Building RETAIN model (mode={mode})...")
+    model = RETAINModel(dataset=sample_dataset, **ABLATION_MODES[mode])
  
     print("Creating trainer...")
     trainer = Trainer(
@@ -79,7 +96,7 @@ def main():
     results_dir = Path("results")
     results_dir.mkdir(exist_ok=True)
  
-    output_path = results_dir / "retain_drug_test_metrics.json"
+    output_path = results_dir / f"retain_drug_{mode}_test_metrics.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(test_metrics, f, indent=2)
  
