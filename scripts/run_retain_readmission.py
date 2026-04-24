@@ -60,8 +60,8 @@ def main():
         val_dataloader=val_loader,
         epochs=epochs,
         monitor=monitor,
-        weight_decay=1e-4,
-        patience=10,
+        optimizer_params={"lr": 0.0005},
+        patience=15,
     )
  
     print("Evaluating on test set...")
