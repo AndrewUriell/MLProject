@@ -8,7 +8,7 @@ import numpy as np
 sys.path.append(str(Path(__file__).resolve().parents[1]))
  
 from pyhealth.datasets import get_dataloader
-from pyhealth.models import RETAIN
+from src.models.retain_model import RETAINModel
 from pyhealth.trainer import Trainer
 from pyhealth.utils import set_seed
 
@@ -39,7 +39,7 @@ def main():
     test_loader = get_dataloader(test_dataset, batch_size=batch_size, shuffle=False)
  
     print("Building RETAIN model...")
-    model = RETAIN(dataset=sample_dataset)
+    model = RETAINModel(dataset=sample_dataset)
  
     print("Creating trainer...")
     trainer = Trainer(
