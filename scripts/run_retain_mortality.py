@@ -23,15 +23,24 @@ ABLATION_MODES = {
     "empty": {"use_alpha": False,  "use_beta": False},
 }
 
+ADDITIONAL_FLAGS = {
+    "base":  {"focal_loss": False, "bidirectional": False},
+    "focal": {"focal_loss": True,  "bidirectional": False},
+    "bidir": {"focal_loss": False, "bidirectional": True},
+    "full":  {"focal_loss": True,  "bidirectional": True},
+}
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", choices=list(ABLATION_MODES.keys()), default="full")
+    parser.add_argument("--variant", choices=list(ADDITIONAL_FLAGS.keys()),       default="full")
     return parser.parse_args()
 
 def main():
     set_seed(42)
     args = parse_args()
     mode = args.mode
+    variant = args.variant
     config = load_common_config()
     batch_size = config["training"]["batch_size"]
     epochs = config["training"]["epochs"]
@@ -48,8 +57,8 @@ def main():
     val_loader = get_dataloader(val_dataset, batch_size=batch_size, shuffle=False)
     test_loader = get_dataloader(test_dataset, batch_size=batch_size, shuffle=False)
 
-    print(f"Building RETAIN model (mode={mode})...")
-    model = RETAINModel(dataset=sample_dataset, **ABLATION_MODES[mode], focal_loss=True, bidirectional=True)
+    print(f"Building RETAIN model (mode={mode}),  variant={variant}) ...")
+    model = RETAINModel(dataset=sample_dataset, **ABLATION_MODES[mode], **ADDITIONAL_FLAGS[variant],)
 
     print("Creating trainer...")
     trainer = Trainer(model=model, device=device)
@@ -73,7 +82,7 @@ def main():
     results_dir = Path("results")
     results_dir.mkdir(exist_ok=True)
 
-    output_path = results_dir / f"retain_mortality_{mode}_test_metrics.json"
+    output_path = results_dir / f"retain_drug_{mode}_{variant}_test_metrics.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(test_metrics, f, indent=2)
 
