@@ -49,7 +49,7 @@ def main():
     test_loader = get_dataloader(test_dataset, batch_size=batch_size, shuffle=False)
 
     print(f"Building RETAIN model (mode={mode})...")
-    model = RETAINModel(dataset=sample_dataset, **ABLATION_MODES[mode])
+    model = RETAINModel(dataset=sample_dataset, **ABLATION_MODES[mode], focal_loss=True, bidirectional=True)
 
     print("Creating trainer...")
     trainer = Trainer(model=model, device=device)

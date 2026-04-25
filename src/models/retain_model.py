@@ -7,11 +7,30 @@ import torch.nn.utils.rnn as rnn_utils
 from pyhealth.models.base_model import BaseModel
 from pyhealth.models.embedding import EmbeddingModel
  
+
+
+# Trying a different loss function for the unbalanced data (mortality and readmission)
+class FocalLoss(nn.Module):
+
+    def __init__(self, gamma: float = 2.0):
+        super(FocalLoss, self).__init__()
+        self.gamma = gamma
+
+    def forward(self, logits: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
+        targets = targets.float()
+        bce = nn.functional.binary_cross_entropy_with_logits(
+            logits, targets, reduction="none"
+        )
+        # p_t is the probability of the correct class
+        p_t = torch.exp(-bce)
+        # downweight easy examples via (1 - p_t)^gamma
+        focal_weight = (1 - p_t) ** self.gamma
+        return (focal_weight * bce).mean()
  
 # Attention layer for an individual feature stream (like for example conditions, procedures)
 class RETAINLayer(nn.Module):
  
-    def __init__(self, feature_size: int, dropout: float = 0.5, use_alpha: bool = True, use_beta: bool = True,):
+    def __init__(self, feature_size: int, dropout: float = 0.5, use_alpha: bool = True, use_beta: bool = True, bidirectional: bool = False,):
         super(RETAINLayer, self).__init__()
         self.feature_size = feature_size
         self.use_alpha = use_alpha
@@ -19,8 +38,11 @@ class RETAINLayer(nn.Module):
         self.dropout_layer = nn.Dropout(p=dropout)
 
         if use_alpha:
-            self.alpha_gru = nn.GRU(feature_size, feature_size, batch_first=True)
-            self.alpha_li = nn.Linear(feature_size, 1)
+            self.bidirectional = bidirectional
+            self.alpha_gru = nn.GRU(feature_size, feature_size, batch_first=True, bidirectional=bidirectional,)
+            #Account for double size if bidirectionality
+            alpha_input_size = feature_size * 2 if bidirectional else feature_size
+            self.alpha_li = nn.Linear(alpha_input_size, 1)
 
         if use_beta:
             self.beta_gru = nn.GRU(feature_size, feature_size, batch_first=True)
@@ -82,7 +104,7 @@ class RETAINLayer(nn.Module):
 # Full RETAIN model
 class RETAINModel(BaseModel):
  
-    def __init__(self, dataset, embedding_dim: int = 128, dropout: float = 0.5, use_alpha: bool = True, use_beta: bool = True):
+    def __init__(self, dataset, embedding_dim: int = 128, dropout: float = 0.5, use_alpha: bool = True, use_beta: bool = True, focal_loss: bool = False, focal_gamma: float = 2.0, bidirectional: bool = False,):
         super(RETAINModel, self).__init__(dataset=dataset)
         self.embedding_dim = embedding_dim
  
@@ -94,11 +116,14 @@ class RETAINModel(BaseModel):
  
         self.retain = nn.ModuleDict()
         for feature_key in self.feature_keys:
-            self.retain[feature_key] = RETAINLayer(feature_size=embedding_dim, dropout=dropout, use_alpha=use_alpha, use_beta=use_beta)
+            self.retain[feature_key] = RETAINLayer(feature_size=embedding_dim, dropout=dropout, use_alpha=use_alpha, use_beta=use_beta, bidirectional=bidirectional,)
 
  
         output_size = self.get_output_size()
         self.fc = nn.Linear(len(self.feature_keys) * embedding_dim, output_size)
+
+        #If we are doing FocalLoss, use it
+        self.focal = FocalLoss(gamma=focal_gamma) if focal_loss else None
  
     # Runs each feature through the RETAIN model and does classification of the output
     def forward(self, **kwargs) -> Dict[str, torch.Tensor]:
@@ -120,7 +145,13 @@ class RETAINModel(BaseModel):
         logits = self.fc(patient_emb)
  
         y_true = kwargs[self.label_key].to(self.device)
-        loss = self.get_loss_function()(logits, y_true)
+
+        #Use Focal Loss if enabled
+        if self.focal is not None:
+            loss = self.focal(logits, y_true)
+        else:
+            loss = self.get_loss_function()(logits, y_true)
+
         y_prob = self.prepare_y_prob(logits)
  
         results = {"loss": loss, "y_prob": y_prob, "y_true": y_true, "logit": logits}
