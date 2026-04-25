@@ -82,7 +82,7 @@ def main():
     results_dir = Path("results")
     results_dir.mkdir(exist_ok=True)
 
-    output_path = results_dir / f"retain_drug_{mode}_{variant}_test_metrics.json"
+    output_path = results_dir / f"retain_mortality_{mode}_{variant}_test_metrics.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(test_metrics, f, indent=2)
 
