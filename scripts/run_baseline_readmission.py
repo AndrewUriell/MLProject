@@ -43,6 +43,7 @@ def main():
         val_dataloader=val_loader,
         epochs=epochs,
         monitor=monitor,
+        patience=15,
     )
 
     print("Evaluating on test set...")
