@@ -104,7 +104,7 @@ class RETAINLayer(nn.Module):
 # Full RETAIN model
 class RETAINModel(BaseModel):
  
-    def __init__(self, dataset, embedding_dim: int = 128, dropout: float = 0.5, use_alpha: bool = True, use_beta: bool = True, focal_loss: bool = False, focal_gamma: float = 2.0, bidirectional: bool = False,):
+    def __init__(self, dataset, embedding_dim: int = 128, dropout: float = 0.5, use_alpha: bool = True, use_beta: bool = True, focal_loss: bool = False, focal_gamma: float = 2.0, bidirectional: bool = False, pos_weight: Optional[torch.Tensor] = None):
         super(RETAINModel, self).__init__(dataset=dataset)
         self.embedding_dim = embedding_dim
  
@@ -124,6 +124,11 @@ class RETAINModel(BaseModel):
 
         #If we are doing FocalLoss, use it
         self.focal = FocalLoss(gamma=focal_gamma) if focal_loss else None
+
+        if pos_weight is not None:
+            self.register_buffer("pos_weight", pos_weight)
+        else:
+            self.pos_weight = None
  
     # Runs each feature through the RETAIN model and does classification of the output
     def forward(self, **kwargs) -> Dict[str, torch.Tensor]:
@@ -149,6 +154,10 @@ class RETAINModel(BaseModel):
         #Use Focal Loss if enabled
         if self.focal is not None:
             loss = self.focal(logits, y_true)
+        elif self.pos_weight is not None:
+            loss = nn.functional.binary_cross_entropy_with_logits(
+                logits, y_true.float(), pos_weight=self.pos_weight
+            )
         else:
             loss = self.get_loss_function()(logits, y_true)
 
