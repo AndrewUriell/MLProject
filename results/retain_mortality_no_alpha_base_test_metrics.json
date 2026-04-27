@@ -1,0 +1,9 @@
+{
+  "pr_auc": 0.15787760840226636,
+  "roc_auc": 0.6221116504854369,
+  "f1": 0.0,
+  "loss": 0.352110480440074,
+  "task": "mortality",
+  "mode": "no_alpha",
+  "variant": "base"
+}
